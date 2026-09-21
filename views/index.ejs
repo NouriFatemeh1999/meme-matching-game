@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <title>MemeGame</title>
+</head>
+<body>
+    <div class="container">
+
+        <% if(locals.result){ %>
+            <div class="result <%= locals.isCorrect ? 'correct' : 'wrong' %>">
+                <h2><%= result %></h2>
+            </div>
+            <form action="/start" method="POST">
+                <button class="start-btn">Next Meme 🎮</button>
+            </form>
+
+        <% } else if(locals.meme){ %>
+            <img class="meme-img" src="<%= meme.url %>" alt="<%= meme.name %>">
+            <h1>Choose the best caption for this meme:</h1>
+            <form action="/meme-checking" method="POST">
+                <input type="hidden" name="correctCaption" value="<%= correctCaption %>">
+                <div class="captions">
+                    <% captions.forEach(caption => { %>
+                        <button class="caption-btn" type="submit" name="caption" value="<%= caption %>"><%= caption %></button>
+                    <% }); %>
+                </div>
+            </form>
+
+        <% } else { %>
+            <div class="welcome">
+                <h1>🎭 Meme Matching Game</h1>
+                <p>Can you match the meme with the right caption?</p>
+                <form action="/start" method="POST">
+                    <button class="start-btn" type="submit">Start Game 🎮</button>
+                </form>
+            </div>
+        <% } %>
+
+    </div>
+</body>
+</html>
